@@ -7,12 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-  <ProjectReference Include="..\shared\ChemicalDispersionWater.SharedModels\ChemicalDispersionWater.SharedModels.csproj" />
-</ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="NetTopologySuite" Version="2.6.0" />
   </ItemGroup>
-
 
 </Project>

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChemicalDispersionWater.FluidDynamics")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d2a1520664dcca8f5c099eb6d7395db9da256a8")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChemicalDispersionWater.FluidDynamics")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChemicalDispersionWater.FluidDynamics")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
