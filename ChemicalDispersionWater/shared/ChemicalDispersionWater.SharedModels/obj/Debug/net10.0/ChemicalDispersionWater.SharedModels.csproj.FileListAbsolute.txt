@@ -1,0 +1,12 @@
+C:\code\ChemicalDispersionWater\shared\ChemicalDispersionWater.SharedModels\obj\Debug\net10.0\ChemicalDispersionWater.SharedModels.GeneratedMSBuildEditorConfig.editorconfig
+C:\code\ChemicalDispersionWater\shared\ChemicalDispersionWater.SharedModels\obj\Debug\net10.0\ChemicalDispersionWater.SharedModels.AssemblyInfoInputs.cache
+C:\code\ChemicalDispersionWater\shared\ChemicalDispersionWater.SharedModels\obj\Debug\net10.0\ChemicalDispersionWater.SharedModels.AssemblyInfo.cs
+C:\code\ChemicalDispersionWater\shared\ChemicalDispersionWater.SharedModels\obj\Debug\net10.0\ChemicalDispersionWater.SharedModels.csproj.CoreCompileInputs.cache
+C:\code\ChemicalDispersionWater\shared\ChemicalDispersionWater.SharedModels\bin\Debug\net10.0\ChemicalDispersionWater.SharedModels.deps.json
+C:\code\ChemicalDispersionWater\shared\ChemicalDispersionWater.SharedModels\bin\Debug\net10.0\ChemicalDispersionWater.SharedModels.dll
+C:\code\ChemicalDispersionWater\shared\ChemicalDispersionWater.SharedModels\bin\Debug\net10.0\ChemicalDispersionWater.SharedModels.pdb
+C:\code\ChemicalDispersionWater\shared\ChemicalDispersionWater.SharedModels\obj\Debug\net10.0\ChemicalDispersionWater.SharedModels.csproj.AssemblyReference.cache
+C:\code\ChemicalDispersionWater\shared\ChemicalDispersionWater.SharedModels\obj\Debug\net10.0\ChemicalDispersionWater.SharedModels.dll
+C:\code\ChemicalDispersionWater\shared\ChemicalDispersionWater.SharedModels\obj\Debug\net10.0\refint\ChemicalDispersionWater.SharedModels.dll
+C:\code\ChemicalDispersionWater\shared\ChemicalDispersionWater.SharedModels\obj\Debug\net10.0\ChemicalDispersionWater.SharedModels.pdb
+C:\code\ChemicalDispersionWater\shared\ChemicalDispersionWater.SharedModels\obj\Debug\net10.0\ref\ChemicalDispersionWater.SharedModels.dll

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "wxv+7i0GKvM=",
+  "success": true,
+  "projectFilePath": "C:\\code\\ChemicalDispersionWater\\shared\\ChemicalDispersionWater.SharedModels\\ChemicalDispersionWater.SharedModels.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\sublyime\\.nuget\\packages\\nettopologysuite\\2.6.0\\nettopologysuite.2.6.0.nupkg.sha512"
+  ],
+  "logs": []
+}
