@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using NetTopologySuite.Geometries;
 using ChemicalDispersionWater.SharedModels;
 
 namespace ChemicalDispersionWater.Api.Data
@@ -11,33 +10,59 @@ namespace ChemicalDispersionWater.Api.Data
         {
         }
 
-        public DbSet<Spill> Spills { get; set; } = null!;
         public DbSet<Chemical> Chemicals { get; set; } = null!;
-        public DbSet<WeatherData> Weather { get; set; } = null!;
-        public DbSet<TideInfo> Tides { get; set; } = null!;
+        public DbSet<Spill> Spills { get; set; } = null!;
+        public DbSet<WeatherData> WeatherData { get; set; } = null!;
+        public DbSet<TideInfo> TideInfos { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Map spatial types if needed
-            modelBuilder.Entity<Spill>(entity =>
+            base.OnModelCreating(modelBuilder);
+
+            // Configure Chemical entity
+            modelBuilder.Entity<Chemical>(entity =>
             {
-                entity.Property(e => e.Location).HasColumnType("geometry");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Density).IsRequired();
+                entity.Property(e => e.MolecularWeight).IsRequired();
+                entity.Property(e => e.BoilingPointC).IsRequired();
+                entity.Property(e => e.SolubilityMgL).IsRequired();
             });
 
-            // Seed initial data with static timestamps
-            modelBuilder.Entity<Chemical>().HasData(
-                new Chemical { Id = 1, Name = "Oil", Density = 0.85 },
-                new Chemical { Id = 2, Name = "Acid", Density = 1.2 }
-            );
+            // Configure Spill entity
+            modelBuilder.Entity<Spill>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Volume).IsRequired();
+                entity.Property(e => e.Location).HasColumnType("geography (point)");
+                entity.Property(e => e.Timestamp).IsRequired();
 
-            modelBuilder.Entity<Spill>().HasData(
-                new Spill { Id = 1, ChemicalId = 1, Volume = 1000, Location = new Point(-122.4194, 37.7749) { SRID = 4326 }, Timestamp = new DateTime(2025, 9, 5, 12, 0, 0, DateTimeKind.Utc) },
-                new Spill { Id = 2, ChemicalId = 2, Volume = 500, Location = new Point(-122.5, 37.8) { SRID = 4326 }, Timestamp = new DateTime(2025, 9, 5, 11, 0, 0, DateTimeKind.Utc) }
-            );
+                entity.HasOne(e => e.Chemical)
+                    .WithMany()
+                    .HasForeignKey(e => e.ChemicalId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            // Add seeding for WeatherData and TideInfo with static values if needed
+            // Configure WeatherData entity
+            modelBuilder.Entity<WeatherData>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Timestamp).IsRequired();
+                entity.Property(e => e.TemperatureC).IsRequired();
+                entity.Property(e => e.Humidity).IsRequired();
+                entity.Property(e => e.WindSpeed).IsRequired();
+                entity.Property(e => e.WindDirection).IsRequired();
+            });
 
-            base.OnModelCreating(modelBuilder);
+            // Configure TideInfo entity
+            modelBuilder.Entity<TideInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Timestamp).IsRequired();
+                entity.Property(e => e.TideHeight).IsRequired();
+                entity.Property(e => e.TideType).HasMaxLength(50);
+            });
         }
     }
 }

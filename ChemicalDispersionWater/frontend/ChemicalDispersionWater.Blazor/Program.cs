@@ -1,11 +1,37 @@
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using ChemicalDispersionWater.Blazor;
+using ChemicalDispersionWater.Api.Data;
+using Microsoft.EntityFrameworkCore;
 
-var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.RootComponents.Add<App>("#app");
-builder.RootComponents.Add<HeadOutlet>("head::after");
+var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+// Add PostgreSQL EF Core DbContext with NetTopologySuite for spatial support
+builder.Services.AddDbContext<ChemicalDispersionDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        o => o.UseNetTopologySuite()
+    )
+);
 
-await builder.Build().RunAsync();
+var app = builder.Build();
+
+// Configure CORS for development
+app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+// Minimal API endpoints
+app.MapGet("/", () => "Chemical Dispersion Water API is running!");
+
+app.MapGet("/test", () => new { Status = "OK", Time = DateTime.Now });
+
+// Ensure database is created
+try
+{
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<ChemicalDispersionDbContext>();
+    context.Database.EnsureCreated();
+    Console.WriteLine("Database created successfully");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Database error: {ex.Message}");
+}
+
+app.Run();
