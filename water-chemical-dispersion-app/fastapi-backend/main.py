@@ -6,10 +6,11 @@ from schemas import SpillCreate, SimulationResponse
 import requests
 from math import sqrt
 import json
+from datetime import date
 
 app = FastAPI()
 
-# Create tables if not exist (run once or on startup)
+# Create tables if not exist
 Base.metadata.create_all(bind=engine)
 
 @app.post("/api/simulate", response_model=SimulationResponse)
@@ -35,23 +36,28 @@ def simulate_spill(spill_data: SpillCreate, db: Session = Depends(get_db)):
     # Hardcoded station ID (extend to find nearest)
     station_id = "9414290"  # San Francisco example
 
-    noaa_api_url = "https://api.tidesandcurrents.noaa.gov/api/prod/"
+    noaa_api_url = "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
+
+    today = date.today().strftime("%Y%m%d")
+    common_params = f"&station={station_id}&begin_date={today}&end_date={today}&datum=MLLW&time_zone=lst_ldt&units=metric&format=json&interval=6"
 
     # Fetch weather (met data)
-    weather_url = f"{noaa_api_url}?station={station_id}&product=met&datum=MLLW&time_zone=lst_ldt&units=metric&format=json&date=today"
+    weather_url = f"{noaa_api_url}?product=met{common_params}"
     try:
         weather_response = requests.get(weather_url)
-        weather_data = weather_response.json() if weather_response.ok else {"error": "Weather fetch failed"}
+        weather_response.raise_for_status()
+        weather_data = weather_response.json()
     except Exception as e:
-        weather_data = {"error": str(e)}
+        weather_data = {"error": f"Weather fetch failed: {str(e)}"}
 
     # Fetch tides (water level)
-    tides_url = f"{noaa_api_url}?station={station_id}&product=water_level&datum=MLLW&time_zone=lst_ldt&units=metric&format=json&date=today"
+    tides_url = f"{noaa_api_url}?product=water_level{common_params}"
     try:
         tides_response = requests.get(tides_url)
-        tides_data = tides_response.json() if tides_response.ok else {"error": "Tides fetch failed"}
+        tides_response.raise_for_status()
+        tides_data = tides_response.json()
     except Exception as e:
-        tides_data = {"error": str(e)}
+        tides_data = {"error": f"Tides fetch failed: {str(e)}"}
 
     # Basic dispersion model
     diffusion = sqrt(2 * spill_data.volume)
