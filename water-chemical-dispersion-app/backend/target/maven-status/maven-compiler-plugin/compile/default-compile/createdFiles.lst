@@ -1,0 +1,7 @@
+com\example\dispersion\controller\SpillController.class
+com\example\dispersion\DispersionApplication.class
+com\example\dispersion\repository\SpillRepository.class
+com\example\dispersion\model\Spill.class
+com\example\dispersion\repository\SimulationRepository.class
+com\example\dispersion\service\DispersionService.class
+com\example\dispersion\model\Simulation.class
